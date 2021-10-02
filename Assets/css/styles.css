@@ -1,0 +1,449 @@
+/*Generales*/
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif,Helvetica,Arial;
+
+}
+body{
+    background: url(../img/bg.png);
+
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+li a:visited{
+    color: #01B1EA;
+}
+li a:hover{
+    color: #555555;    
+}    
+
+/*Container*/
+#Container{
+    width: 80%;
+    margin: 0px auto;
+    box-shadow: 0px 0px 10px gray;
+    background: white;
+}
+/*Header*/
+#Header{
+    height: 145px;
+    background: #f0f0f0;
+}
+
+#Logo{
+    float: left;
+    padding: 18px;
+    margin-left: 20px; 
+}
+
+#Logo a{
+    float: left;
+    font-size: 30px;
+    letter-spacing: 4px;
+    font-family: 'Open Sans',Helvetica,Arial;
+    text-transform: uppercase;
+    color: #01B1EA;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-left:30px;
+    text-shadow: 0px 2px 1px #222222;
+}
+
+#Logo a:hover{
+    text-shadow:0px 2px 1px #222222, 0px 0px 4px #01B1EA;
+}
+
+#Logo img{
+    float: left;
+    height:100px;
+}
+
+table{
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    
+}
+td{
+   border-top: 1px solid #ccc;
+   padding: 2px;
+
+}
+
+/*Menu*/
+
+/*Productos*/
+#Menu{
+    clear: both;
+    background: #222;
+    height: 55px;
+    border-bottom: 4px solid #01B1EA;
+}
+#Menu a{
+    display: block;
+    padding-left: 12px;
+    padding-right:12px;
+    color: white;
+    text-decoration: none;
+    transition: all 300ms;
+}
+#Menu a:first-child{
+    border-left:1px solid #363636; 
+}
+#Menu a:hover{
+    background: #01B1EA
+}
+#Menu ul{
+    list-style: none;
+    margin: 0px auto;
+    margin-left: 25px;
+}
+#Menu ul li{
+    line-height: 55px;
+    float: left;
+    border-right:1px solid #363636;
+}
+
+/*CONTEN*/
+#Content{
+    margin: 0px auto;
+    overflow: hidden;
+    background: white;
+}
+/*Barra Lateral*/
+
+#Lateral{
+    height: 500px;
+    width: 22%;
+    float: left;
+    margin-top: 20px;
+    margin-left:10px;
+}
+
+#Carrito{
+     display: block;
+    width: 90%;
+    margin: 5px auto;
+    padding: 10px;
+}
+
+#Lateral .BlockAsile{
+    display: block;
+    width: 90%;
+    margin: 5px auto;
+    padding: 10px;
+
+}
+
+#Lateral h3{
+    display: block;
+    color: #222;
+    width: 100%;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #E1E1E1;
+    border-bottom:2px solid #01B1EA;
+}
+
+#Lateral input[type="submit"]{
+    margin: 0px auto;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#Lateral ul{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#Lateral ul li{
+    list-style: square;
+    margin-left: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+/*Generales Formularios*/
+
+
+
+.FormContainer{
+    width: 50%;
+}
+
+
+label,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,textArea
+{
+    resize: none;
+    display: block;
+    width: 95%;
+    margin-top:2px;
+    margin-bottom: 2px;
+}
+
+.Alertas{
+    margin-bottom: 2px;
+}
+
+.AlertasError{
+    color:red;
+}
+
+.AlertasExito{
+    color: green;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,textArea
+{
+    border: 1px solid #c9c9c9;
+    box-shadow: 0px 0px 2px #ccc inset;
+    background: white;
+    padding: 2px;
+    color: gray;
+    transition: all 300ms;
+}
+
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textArea:focus{
+    border: 1px solid #1579b5;
+    box-shadow: 0px 0px 2px #ccc inset;
+    color: #222;
+}
+
+input[type="button"],
+input[type="submit"],
+button,.Boton{
+    display: block;
+    border-radius: 4px;
+    padding: 5px;
+    padding-left:06px;
+    padding-right:13px;
+    color: white;
+    text-align:center;
+    font-weight: bold;
+    background: #2979CD;
+    border: 1px solid #11608E;
+    cursor: pointer;
+}
+
+#Lateral label,
+input[type="button"],
+input[type="submit"],
+button{
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.Boton-Small{
+    float: left;
+    width: 140px;;
+    margin-bottom: 20px;
+}
+
+.BotonAcciones{
+    float: right;
+    width: 35%;
+    margin-right: 5px;
+        
+}
+
+
+
+/*Central*/
+#Central{
+    width: 68%;
+    float: right;
+    border-left: 1px solid #ccc;
+    box-shadow: -5px -1px 6px #ddd;
+    padding: 25px;
+    text-align: left;
+}
+
+
+
+
+
+#Central h1{
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    width: 95%;
+}
+
+.Product{
+    width: 29%;
+    float:left;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.Product h2{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.Product p{
+    margin-bottom:  10px;
+    font-weight: bold;
+    color: #555;
+}
+.Boton{
+    background: #43BD2A;
+    text-decoration: none;
+    font-weight: normal;
+    border-radius: 2px;
+    border-color: #20840C;
+}
+.Product img{
+    width: 100px;
+    height: 120px;
+    margin-bottom: 10px;
+}
+
+
+td a{
+    color:#01B1EA;
+
+}
+
+.BotonRojo{
+    background: red;
+    border-color: red;
+}
+.BotonYellow{
+    background: #ff6000;
+    border-color: #ff6000;
+}
+
+#BotonEliminarCarrito{
+    width: 80%;
+    
+}
+
+.BotonUnit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:5px;
+    width: 15px;
+    margin: 0px auto;
+    font-size: 26px;
+    text-align: center;
+    padding: 5px;
+}
+#Unit{
+    text-align: center;
+}
+.Miniatura{
+    width: 100px;
+}
+
+.Product a h2{
+    display:block;
+    color: #555 !Important;
+    height: 50px;
+    text-decoration: none;
+
+}
+
+.ProductDetail{
+    width: 100%;
+}
+
+.ProductDetail img{
+    display: block;
+    width: 40%;
+    float: left;
+    margin-right: 60px;
+}
+
+.ProductDetail .Boton{
+    width: 55%;
+}
+.DetailsData{
+    float: left;
+    width: 45%;
+}
+.Desc{
+    margin-bottom: 30px;
+}
+
+.Precio{
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+td img{
+    height: 80px;
+    display: block;
+    margin:10px auto;
+}
+
+
+
+/*Carrito*/
+#CarritoTotal{
+    float: right;
+    margin-right: 357px;
+    width: 150px;
+}
+
+#CarritoTotal h3{
+    display: block;
+    float: right;
+    
+}
+
+#CarritoBoton{
+    display: block;
+    float: right;
+    width: 120px;
+    margin-right: 20px;
+    
+}
+
+.ListData{
+    list-style: none;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+
+
+/*Footer*/
+#Footer{
+    clear: both;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 4px solid #01B1EA;
+    background: #222222;
+}
