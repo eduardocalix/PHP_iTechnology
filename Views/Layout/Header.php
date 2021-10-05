@@ -16,7 +16,7 @@
                     </a>
                 </div>
             </header>
-            <h1> Konoha</h1> 
+            <h1>    Konoha</h1> 
             <!--Menu-->
             <nav id="Menu">
                 <ul>
@@ -26,14 +26,25 @@
                     <li>
                         <a href="<?= BaseUrl ?>">Administración</a>
                     </li>
+                    <li>
+                        <a href="<?= BaseUrl ?>">Carrito</a>
+                    </li>
                     <?php
-                    $Categoria = Utils::ShowCategorias();
-                    while ($Cat = $Categoria->fetch_object()):
+                     $Categoria = Utils::ShowCategorias();
+
+                     
+                    $i=0;
+                   while ($Cate = sqlsrv_fetch_array($Categoria)){
+                    $id=$Cate['idCategoria'] ;
+                    log($Cate['idCategoria']) ; 
+
+                    $Categoria1=$Cate['Descripcion'];
+                    
                       ?>
                        <li>
-                       <a href="<?= BaseUrl?>Categoria/Ver&Id=<?=$Cat->Id?>"><?=$Cat->Nombre?></a>
+                       <a href="<?= BaseUrl?>Categoria/Ver&Id=<?php echo $id?>"><?php echo $Categoria1?></a>
                         </li>
-                    <?php endwhile; ?>
+                    <?php  }  ?> 
                    
                 </ul>
             </nav>

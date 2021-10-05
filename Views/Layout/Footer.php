@@ -1,7 +1,7 @@
 </div>
 </div>
 <footer id="Footer">
-    <p>Desarrollado por Javier Hernandez &copy;<?= date('Y') ?></p>
+    <p>Desarrollado por Eduardo Calix&copy;<?= date('Y') ?></p>
 </footer>
 </div>
 </body>

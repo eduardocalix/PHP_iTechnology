@@ -1,54 +1,43 @@
 <?php
-
 class Producto {
 
     private $Id;
-    private $CategoriaId;
-    private $Nombre;
     private $Descripcion;
-    private $Precio;
+    private $Costo;
+    private $PrecioVenta;   
     private $Stock;
-    private $Oferta;
-    private $Fecha;
+    private $IdCategoria;
+    private $IdProveedor;   
     private $Image;
     private $Db;
 
     public function __construct() {
-        $this->Db = DataBase::Connect();
+        $this->Db = DataBase::OpenConnection();
     }
 
     function getId() {
         return $this->Id;
     }
-
-    function getCategoriaId() {
-        return $this->CategoriaId;
-    }
-
-    function getNombre() {
-        return $this->Nombre;
-    }
-
     function getDescripcion() {
         return $this->Descripcion;
     }
-
-    function getPrecio() {
-        return $this->Precio;
+    function getCosto() {
+        return $this->Costo;
+    }
+    function getPrecioVenta() {
+        return $this->PrecioVenta;
     }
 
     function getStock() {
         return $this->Stock;
     }
-
-    function getOferta() {
-        return $this->Oferta;
+    function getIdCategoria() {
+        return $this->IdCategoria;
     }
 
-    function getFecha() {
-        return $this->Fecha;
+    function getIdProveedor() {
+        return $this->IdProveedor;
     }
-
     function getImage() {
         return $this->Image;
     }
@@ -56,42 +45,31 @@ class Producto {
     function setId($Id) {
         $this->Id = $Id;
     }
-
-    function setCategoriaId($CategoriaId) {
-        $this->CategoriaId = $CategoriaId;
-    }
-
-    function setNombre($Nombre) {
-        $this->Nombre = $this->Db->real_escape_string($Nombre);
-    }
-
     function setDescripcion($Descripcion) {
         $this->Descripcion = $this->Db->real_escape_string($Descripcion);
     }
-
-    function setPrecio($Precio) {
-        $this->Precio = $this->Db->real_escape_string($Precio);
+    function setCosto($Costo) {
+        $this->Costo = $this->Db->real_escape_string($Costo);
     }
-
+    function setPrecioVenta($PrecioVenta) {
+        $this->PrecioVenta = $this->Db->real_escape_string($PrecioVenta);
+    }
     function setStock($Stock) {
         $this->Stock = $this->Db->real_escape_string($Stock);
     }
-
-    function setOferta($Oferta) {
-        $this->Oferta = $this->Db->real_escape_string($Oferta);
+    function setCategoriaId($CategoriaId) {
+        $this->CategoriaId = $CategoriaId;
     }
-
-    function setFecha($Fecha) {
-        $this->Fecha = $this->Db->real_escape_string($Fecha);
+    function setIdProveedot($IdProveedor) {
+        $this->IdProveedor = $IdProveedor;
     }
-
     function setImage($Image) {
         $this->Image = $this->Db->real_escape_string($Image);
     }
 
     public function getAll() {
-        $Sql = "SELECT *  FROM Productos ORDER BY Id";
-        $Productos = $this->Db->query($Sql);
+        $Sql = "SELECT *  FROM Productos.Producto ORDER BY idProducto";
+        $Productos = sqlsrv_query($this->Db,$Sql);
         $Result = false;
         if ($Productos) {
             $Result = $Productos;
@@ -100,8 +78,8 @@ class Producto {
     }
 
     public function getOne() {
-        $Sql = "SELECT * FROM Productos WHERE Id='{$this->Id}'";
-        $Producto = $this->Db->query($Sql);
+        $Sql = "SELECT * FROM Productos.Producto WHERE idProducto='{$this->Id}'";
+        $Producto = sqlsrv_query($this->Db,$Sql);
         $Result = false;
         if ($Producto) {
             $Result = $Producto;
@@ -110,8 +88,8 @@ class Producto {
     }
     
     public function getPro($CatId){
-        $Sql="SELECT pro.*,ca.Nombre AS 'CaNombre' FROM Productos pro INNER JOIN Categorias ca ON ca.Id=pro.Categoria_Id WHERE ca.Id='{$CatId}'";
-        $Query= $this->Db->query($Sql);
+        $Sql="SELECT pro.*,ca.Descripcion AS 'CategoriaNombre' FROM Productos.Producto pro INNER JOIN Productos.CategoriaProducto ca ON ca.idCategoria=pro.idCategoria WHERE ca.idCategoria='{$CatId}'";
+        $Query=sqlsrv_query($this->Db,$Sql);
         $Result=false;
         if($Query){
             $Result=$Query;
@@ -121,16 +99,16 @@ class Producto {
     }
 
     public function getRand() {
-        $Sql="SELECT * FROM Productos ORDER BY Rand() LIMIT 4";
+        $Sql="SELECT * FROM Productos.Producto ORDER BY Rand() LIMIT 4";
         $Result=false;
-        $Query= $this->Db->query($Sql);
+        $Query= sqlsrv_query($this->Db,$Sql);
         if($Query){
             $Result=$Query;
         }
         return $Result;
                 
     }
-
+ 
     public function Save() {
         $Sql = "INSERT INTO Productos VALUES(null,'{$this->getCategoriaId()}','{$this->getNombre()}',"
                 . "'{$this->getDescripcion()}','{$this->getPrecio()}','{$this->getStock()}',"

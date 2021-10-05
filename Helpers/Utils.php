@@ -1,4 +1,4 @@
-+<?php
+<?php
 
 class Utils {
 
@@ -62,7 +62,7 @@ class Utils {
     public static function ShowCategorias() {
         require_once 'Models/Categoria.php';
         $Categoria = new Categoria();
-        $Cat = $Categoria->getAll(true, 7);
+        $Cat = $Categoria->getAll();
         return $Cat;
     }
     

@@ -1,5 +1,5 @@
 <?php if ($Product = $Pro->fetch_object()): ?>
-    <h1><?= $Product->Nombre ?></h1>
+    <h1><?= $Product->Descripcion ?></h1>
     <div class="ProductDetail">
         <?php if($Product->Image!=null):?>
         <img src="<?=BaseUrl?>Uploads/Images/<?=$Product->Image?>"/>

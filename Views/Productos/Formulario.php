@@ -1,7 +1,7 @@
 <?php if (isset($Edit) && $Edit && $Id && $Pro && is_object($Pro)):     
     $Producto=$Pro->fetch_object();
     $Url = BaseUrl ."Productos/Save&Id=$Producto->Id";?>
-<h1>Editar Producto <?=$Producto->Nombre?></h1>
+<h1>Editar Producto <?=$Producto->Descripcion?></h1>
     <?php
 
     
@@ -25,9 +25,9 @@ Utils:: DeleteSession('RegisterProductos')
     <form action="<?= $Url ?>" method="POST" enctype="multipart/form-data">
 
 
-        <?= Utils::ShowErrors('Errores-Productos-Save', 'Nombre') ?>
-        <label for="Nombre">Nombre</label>
-        <input type="text" name="Nombre" value="<?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->Nombre:''?>" required/>
+        <?= Utils::ShowErrors('Errores-Productos-Save', 'Descripcion') ?>
+        <label for="Descripcion">Descripcion</label>
+        <input type="text" name="Descripcion" value="<?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->Descripcion:''?>" required/>
 
         <label for="Descripcion">Descripcion</label>
         <textarea name="Descripcion"><?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->Descripcion:''?></textarea>
@@ -54,7 +54,7 @@ Utils:: DeleteSession('RegisterProductos')
         <?php $Categorias = Utils::ShowCategorias(); ?>
         <select name="Categoria" >
             <?php while ($Cat = $Categorias->fetch_object()): ?>
-            <option value="<?= $Cat->Id ?>" <?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro) && $Cat->Id==$Producto->Categoria_Id)?'Selected':''?>><?= $Cat->Nombre ?></option>
+            <option value="<?= $Cat->Id ?>" <?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro) && $Cat->Id==$Producto->Categoria_Id)?'Selected':''?>><?= $Cat->Descripcion ?></option>
             <?php endwhile; ?>
         </select>
 

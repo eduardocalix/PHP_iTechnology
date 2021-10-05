@@ -2,46 +2,47 @@
 
 class Categoria {
 
-    private $Id;
-    private $Nombre;
+    private $IdCategoria;
+    private $Descripcion;
     private $Db;
 
     public function __construct() {
-        $this->Db = DataBase::Connect();
+        $this->Db = DataBase::OpenConnection();
     }
 
-    function getId() {
-        return $this->Id;
+    function getIdCategoria() {
+        return $this->IdCategoria;
     }
 
-    function getNombre() {
-        return $this->Nombre;
+    function getDescripcion() {
+        return $this->Descripcion;
     }
 
-    function setId($Id) {
-        $this->Id = $Id;
+    function setIdCategoria($IdCategoria) {
+        $this->IdCategoria = $IdCategoria;
     }
 
-    function setNombre($Nombre) {
-        $this->Nombre = $this->Db->real_escape_string($Nombre);
+    function setDescripcion($Descripcion) {
+        $this->Descripcion = $this->Db->real_escape_string($Descripcion);
     }
 
-    public function getAll($Limit, $Num) {
-        $Sql = "SELECT * FROM CATEGORIAS ORDER BY Id DESC";
+    public function getAll() {
+        $Sql = "SELECT * FROM Productos.CategoriaProducto ORDER BY idCategoria ASC";
         $Result=false;
-        if ($Limit) {
+       /*  if ($Limit) {
             $Sql = $Sql . " LIMIT $Num";
-        }
-        $Categorias = $this->Db->query($Sql);
+        } */
+        $Categorias = sqlsrv_query($this->Db,$Sql);
         if($Categorias){
             $Result=$Categorias;
+            echo ($Categorias);
         }
         return $Result;
     }
 
-    public function getOne($Id) {
-        $Sql = "SELECT * FROM Categorias WHERE Id=$Id";
-        $Categoria = $this->Db->query($Sql);
+    public function getOne($IdCategoria) {
+        $Sql = "SELECT * FROM Productos.CategoriaProducto WHERE idCategoria=$IdCategoria";
+        $Categoria = sqlsrv_query($this->Db,$Sql);
         $Result=false;
         if($Categoria){
             $Result=$Categoria;
@@ -51,9 +52,9 @@ class Categoria {
     }
 
     public function Save() {
-        $Nombre = $this->Nombre;
-        $Sql = "INSERT INTO Categorias VALUES(null,'$Nombre')";
-        $Save = $this->Db->query($Sql);
+        $Descripcion = $this->Descripcion;
+        $Sql = "INSERT INTO Productos.CategoriaProducto VALUES(null,'$Descripcion')";
+        $Save = sqlsrv_query($this->Db,$Sql);
         $Result = false;
         if ($Save) {
             $Result = true;
@@ -61,14 +62,14 @@ class Categoria {
         return $Result;
     }
 
-    public function Update($Id, $Nombre) {
-        $Sql="UPDATE Categorias SET(Nombre='$Nombre') WHERE Id='$Id'";
+    public function Update($IdCategoria, $Descripcion) {
+        $Sql="UPDATE Productos.CategoriaProducto SET(Descripcion='$Descripcion') WHERE idCategoria='$IdCategoria'";
         echo $Sql;
         die();
         
     }
 
-    public function Delete($Id) {
+    public function Delete($IdCategoria) {
         
     }
 

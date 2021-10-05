@@ -1,5 +1,5 @@
 <?php if (isset($Cat) && $Categorias = $Cat->fetch_object()): ?>
-    <h1><?= $Categorias->Nombre ?></h1>
+    <h1><?= $Categorias->Descripcion ?></h1>
     <?php if ($Pro->num_rows>0): ?>
         <?php require_once 'Views/Productos/List.php'; ?>
     <?php else: ?>

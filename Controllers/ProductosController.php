@@ -32,7 +32,7 @@ class ProductosController {
         Utils::isAdmin();
         require_once 'Views/Productos/Formulario.php';
     }
-
+/* 
     public function Save() {
         Utils::isAdmin();
         $Errores = array();
@@ -142,7 +142,7 @@ class ProductosController {
         require_once 'Views/Productos/Formulario.php';
     }
     
-    
+     */
     
 
 //    public function Update() {

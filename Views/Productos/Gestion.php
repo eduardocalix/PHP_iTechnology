@@ -7,7 +7,7 @@
 <table>
     <tr>
         <th>Id</th>
-        <th>Nombre</th>
+        <th>Descripcion</th>
         <th>Precio</th>
         <th>Stock</th>
         <th>Acciones</th>
@@ -15,7 +15,7 @@
     <?php while ($Producto = $Pro->fetch_object()): ?>
         <tr>
             <td><?= $Producto->Id ?></td>
-            <td><?= $Producto->Nombre ?></td>
+            <td><?= $Producto->Descripcion ?></td>
             <td>$ <?= $Producto->Precio ?></td>
             <td><?= $Producto->Stock ?></td>
             <td>

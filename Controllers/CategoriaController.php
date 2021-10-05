@@ -8,7 +8,7 @@ class CategoriaController {
     public function Index() {
         Utils::isAdmin();
         $Categorias = new Categoria();
-        $Categoria = $Categorias->getAll(true, 7);
+        $Categoria = $Categorias->getAll();
         require_once 'Views/Categorias/Index.php';
     }
 
@@ -35,11 +35,11 @@ class CategoriaController {
             $Categoria = new Categoria();
             $Utils = new Utils();
             $Errores = array();
-            $Nombre = isset($_POST['Nombre']) ? $_POST['Nombre'] : FALSE;
-            if ($Nombre) {
-                $Errores = Utils::ValidateText('Nombre', $Nombre);
+            $Descripcion = isset($_POST['Descripcion']) ? $_POST['Descripcion'] : FALSE;
+            if ($Descripcion) {
+                $Errores = Utils::ValidateText('Descripcion', $Descripcion);
                 if (count($Errores) == 0) {
-                    $Categoria->setNombre($_POST['Nombre']);
+                    $Categoria->setDescripcion($_POST['Descripcion']);
                     $Save = $Categoria->Save();
                     if ($Save) {
                         $_SESSION['Save-Categorias'] = 'Complete';

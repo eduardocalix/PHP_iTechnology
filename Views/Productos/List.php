@@ -7,7 +7,7 @@
             <?php else: ?>
                 <img src="<?= BaseUrl ?>assets/img/camiseta.png"/>
             <?php endif; ?>
-            <h2><?=$Producto->Nombre?></h2>
+            <h2><?=$Producto->Descripcion?></h2>
         </a>
         <p><?= $Producto->Precio ?> Euros</p>
         <a href="<?=BaseUrl?>Carrito/Add&Id=<?=$Producto->Id?>" class="Boton">Comprar</a>

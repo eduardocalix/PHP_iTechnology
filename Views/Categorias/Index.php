@@ -10,13 +10,13 @@
 <?php Utils::DeleteSession('Save-Categorias');?>
 <table>
     <tr>
-        <th>Id</th>
-        <th>Nombre</th>
+        <th>IdCategoria</th>
+        <th>Descripcion</th>
     </tr>
-    <?php while ($Cat = $Categoria->fetch_object()): ?>
+    <?php while ($Cat = sqlsrv_fetch_array($Categorias)): ?>
         <tr>
-            <td><?= $Cat->Id ?></td>
-            <td><?= $Cat->Nombre ?></td>
+            <td><?= $Cat['IdCategoria'] ?></td>
+            <td><?= $Cat['Descripcion'] ?></td>
         </tr>    
     <?php endwhile; ?>
 </table>
