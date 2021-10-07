@@ -1,16 +1,14 @@
-<?php while ($Producto = $Pro->fetch_object()): ?>
-<?php if($Producto->Stock>=1):?>
+<?php while ($Producto = sqlsrv_fetch_array($Pro)){ ?>
     <div class="Product">
-        <a href="<?=BaseUrl?>Productos/Details&Id=<?=$Producto->Id?>">
-            <?php if ($Producto->Image != null): ?>
-                <img src="<?= BaseUrl ?>Uploads/Images/<?= $Producto->Image ?>"/>
+        <a href="<?=BaseUrl?>Productos/Details&Id=<?=$Producto['idProducto']?>">
+            <?php if ($Producto['imagen'] != null): ?>
+                <img src="<?= BaseUrl ?>Uploads/Images/<?=$Producto['imagen']?>"/>
             <?php else: ?>
-                <img src="<?= BaseUrl ?>assets/img/camiseta.png"/>
+                <img src="<?= BaseUrl ?>assets/img/konoha.jpg"/>
             <?php endif; ?>
-            <h2><?=$Producto->Descripcion?></h2>
+            <h2><?=$Producto['descripcion']?></h2>
         </a>
-        <p><?= $Producto->Precio ?> Euros</p>
-        <a href="<?=BaseUrl?>Carrito/Add&Id=<?=$Producto->Id?>" class="Boton">Comprar</a>
+        <p>L.  <?=$Producto['precioVenta']?></p>
+        <a href="<?=BaseUrl?>Carrito/Add&Id=<?=$Producto['idProducto']?>" class="Boton">Comprar</a>
     </div>
-<?php endif;?>
-<?php endwhile; ?>
+<?php }?>

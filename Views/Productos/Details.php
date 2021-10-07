@@ -1,15 +1,15 @@
-<?php if ($Product = $Pro->fetch_object()): ?>
-    <h1><?= $Product->Descripcion ?></h1>
+<?php if ($Product = sqlsrv_fetch_arrayy($Pro)): ?>
+    <h1><?= $Product['descripcion'] ?></h1>
     <div class="ProductDetail">
-        <?php if($Product->Image!=null):?>
-        <img src="<?=BaseUrl?>Uploads/Images/<?=$Product->Image?>"/>
+        <?php if($Product['imagen']!=null):?>
+        <img src="<?=BaseUrl?>Uploads/Images/<?=$Product['imagen']?>"/>
         <?php else:?>
         <img src="<?=BaseUrl?>assets/img/camiseta.png"/>
         <?php endif;?>
         <div class="DetailsData">
-            <p class="Desc"><?=$Product->Descripcion?></p>
-            <p class="Precio"><?= $Product->Precio ?> $</p>
-            <a href="<?=BaseUrl?>Carrito/Add&Id=<?=$Product->Id?>" class="Boton">Comprar</a>
+            <p class="Desc"><?=$Product['descripcion']?></p>
+            <p class="Precio"><?= $Product['precioVenta'] ?> $</p>
+            <a href="<?=BaseUrl?>Carrito/Add&Id=<?=$Product['idProducto']?>" class="Boton">Comprar</a>
         </div>
     </div>
 <?php else: ?>

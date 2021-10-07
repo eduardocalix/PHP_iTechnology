@@ -4,15 +4,13 @@ class Usuario {
 
     private $Id;
     private $Nombre;
-    private $Apellidos;
-    private $Email;
-    private $Password;
-    private $Rol;
-    private $Imagen;
+    private $Apellido;
+    private $Usuario;
+    private $Clave;
     private $DB;
 
     public function __construct() {
-        $this->DB = DataBase::Connect();
+        $this->DB = DataBase::OpenConnection();
     }
 
     function getId() {
@@ -23,26 +21,17 @@ class Usuario {
         return $this->Nombre;
     }
 
-    function getApellidos() {
-        return $this->Apellidos;
+    function getApellido() {
+        return $this->Apellido;
     }
 
-    function getEmail() {
-        return $this->Email;
+    function getUsuario() {
+        return $this->Usuario;
     }
 
-    function getPassword() {
-        return password_hash($this->DB->real_escape_string($this->Password), PASSWORD_BCRYPT, ['cost' => 4]);
+    function getClave() {
+        return Clave_hash($this->DB->real_escape_string($this->Clave), Clave_BCRYPT, ['cost' => 4]);
     }
-
-    function getRol() {
-        return $this->Rol;
-    }
-
-    function getImagen() {
-        return $this->Imagen;
-    }
-
     function setId($Id) {
         $this->Id = $Id;
     }
@@ -51,30 +40,22 @@ class Usuario {
         $this->Nombre = $this->DB->real_escape_string($Nombre);
     }
 
-    function setApellidos($Apellidos) {
-        $this->Apellidos = $this->DB->real_escape_string($Apellidos);
+    function setApellido($Apellido) {
+        $this->Apellido = $this->DB->real_escape_string($Apellido);
     }
 
-    function setEmail($Email) {
-        $this->Email = $this->DB->real_escape_string($Email);
+    function setUsuario($Usuario) {
+        $this->Usuario = $this->DB->real_escape_string($Usuario);
     }
 
-    function setPassword($Password) {
-        $this->Password=$Password; 
-    }
-
-    function setRol($Rol) {
-        $this->Rol = $this->DB->real_escape_string($Rol);
-    }
-
-    function setImagen($Imagen) {
-        $this->Imagen = $this->DB->real_escape_string($Imagen);
+    function setClave($Clave) {
+        $this->Clave=$Clave; 
     }
 
     public function Save() {
-        $Sql = "INSERT INTO Usuarios VALUES(null,'{$this->getNombre()}',"
-                . "'{$this->getApellidos()}','{$this->getEmail()}','{$this->getPassword()}','user','null')";
-        $Save = $this->DB->query($Sql);
+        $Sql = "INSERT INTO Acceso.Usuarios VALUES('{$this->getNombre()}',"
+                . "'{$this->getApellido()}','{$this->getUsuario()}','{$this->getClave()}')";
+        $Save = sqlsrv_query($this->DB,$Sql);
         $Result = false;
         if ($Save) {
             $Result = true;
@@ -85,14 +66,14 @@ class Usuario {
     }
 
     public function LogIn() {
-        $Email = $this->Email;
-        $Password = $this->Password;
-        $Sql = "SELECT * FROM Usuarios WHERE Email='{$this->Email}'";
-        $Login = $this->DB->query($Sql);
+        $Usuario = $this->Usuario;
+        $Clave = $this->Clave;
+        $Sql = "SELECT * FROM Acceso.Usuarios WHERE usuario='{$this->Usuario}'";
+        $Login = sqlsrv_query($this->DB,$Sql);
         $Result=false;
         if ($Login && $Login->num_rows == 1) {
-            $Usuario = $Login->fetch_object();
-            $Verify = password_verify($Password, $Usuario->Password);
+            $Usuario =  sqlsrv_fetch_array($Login);
+            $Verify = Clave_verify($Clave, $Usuario['clave']);
             if ($Verify) {
                 
                 $Result = $Usuario;

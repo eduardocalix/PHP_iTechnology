@@ -1,5 +1,5 @@
 <?php
-session_start();
+///session_start();
 require_once 'autoload.php';
 require_once 'Config/Db.php';
 require_once 'Config/Parameters.php';

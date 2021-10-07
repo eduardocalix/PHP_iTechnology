@@ -28,16 +28,12 @@ class Categoria {
 
     public function getAll() {
         $Sql = "SELECT * FROM Productos.CategoriaProducto ORDER BY idCategoria ASC";
-        $Result=false;
-       /*  if ($Limit) {
-            $Sql = $Sql . " LIMIT $Num";
-        } */
+     
         $Categorias = sqlsrv_query($this->Db,$Sql);
-        if($Categorias){
-            $Result=$Categorias;
-            echo ($Categorias);
+        if(!$Categorias){
+            print_r ("no encontradas");
         }
-        return $Result;
+        return $Categorias;
     }
 
     public function getOne($IdCategoria) {

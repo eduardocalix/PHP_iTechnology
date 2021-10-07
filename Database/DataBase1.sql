@@ -160,7 +160,8 @@ GO
 USE DBKonoha
 GO
 
-
+--------------------------------
+--CREACION DE FUNCION DE NOMBRES PROPIOS
 CREATE FUNCTION Acceso.NombrePropios
 (
 	@cadenaDeIngreso VARCHAR(2000)
@@ -235,7 +236,74 @@ GO
 
 --SP_InsertarUsuario(nombre, apellido, usuario, clave)
 EXEC SP_InsertarUsuario 'eduardo','calix','nose'
---Agregar Categorias 
+GO
+
+CREATE PROCEDURE SP_ModificarUsuario
+(
+    @usuarioAnterior NVARCHAR(26),
+    @nombre NVARCHAR(25),
+    @apellido NVARCHAR(25),
+    @clave NVARCHAR(20),
+    @idRol INT
+)
+AS
+BEGIN
+    DECLARE @existe int;
+    DECLARE @Usuario nVarchar(26);
+    SET @existe = 0;
+    IF (@nombre = '' OR @apellido = '')
+        BEGIN
+            RAISERROR(N'Hay campos abligatorios sin llenar', 16, 1, @nombre, @apellido);
+            RETURN 0
+        END
+    ELSE
+        BEGIN
+            SET @usuario = UPPER(LEFT(@nombre, 1)) + Utilidad.NombrePropios(@apellido)
+
+            SELECT @existe = COUNT(Acceso.Usuarios.usuario) FROM Acceso.Usuarios WHERE usuario = @usuarioAnterior;
+            IF (@existe = 0)
+                BEGIN
+                    RAISERROR(N'No existe un usuario con el nombre  "%s %s"', 16, 1, @nombre, @apellido);
+                    RETURN 0
+                END     
+            ELSE
+                BEGIN
+                    UPDATE Acceso.Usuarios
+                        SET     nombre = Utilidad.NombrePropios(@nombre),
+                                apellido = Utilidad.NombrePropios(@apellido), 
+                                usuario =   @usuario, 
+                                clave = @clave, 
+                                idRol = @idRol
+                            WHERE usuario = @usuarioAnterior;
+                    RETURN 1
+                END          
+        END
+END
+GO
+
+CREATE PROCEDURE SP_EliminarUsuario
+(
+    @usuario NVARCHAR(26)
+)
+AS
+BEGIN
+    DECLARE @existe int;
+    SET @existe = 0;
+
+            SELECT @existe = COUNT(Acceso.Usuarios.usuario) FROM Acceso.Usuarios WHERE usuario = @usuario;
+            IF (@existe = 0)
+                BEGIN
+                    RAISERROR(N'No existe un usuario con el nombre "', 16, 1);
+                    RETURN 0
+                END     
+            ELSE
+                BEGIN
+                    DELETE FROM Acceso.Usuarios WHERE usuario = @usuario;
+                    RETURN 1
+                END
+END
+GO
+
 
 
 ----------------------------------------------------------
@@ -268,6 +336,62 @@ GO
 
 --SP_AgregarProveedor(nombre,telefono,direccion)
 EXEC SP_AgregarProveedor 'Pablo Marmol','9999-9999','Piedra Dura'
+
+GO
+CREATE PROCEDURE SP_ModificarProveedor
+(
+	@idProveedor INT,
+	@nombre NVARCHAR(100),
+	@telefono NVARCHAR(9),
+	@direccion NVARCHAR(300)
+)
+AS
+BEGIN
+	DECLARE @existe int;
+	SET @existe = 0;
+
+	SELECT @existe = COUNT(Productos.Proveedores.idProveedor) FROM Productos.Proveedores WHERE idProveedor = @idProveedor;
+
+	IF (@existe = 0)
+		BEGIN
+			RAISERROR(N'No existe el proveedor con el id %d"', 16, 1, @idProveedor);
+			RETURN 0
+		END 	
+	ELSE
+		BEGIN
+			UPDATE Productos.Proveedores
+				SET 	nombre = @nombre,
+						telefono = @telefono,
+						direccion = @direccion
+					WHERE idProveedor = @idProveedor;
+			RETURN 1
+		END
+END
+GO
+
+
+
+CREATE PROCEDURE SP_EliminarProveedor
+(
+	@idProveedor INT
+)
+AS
+BEGIN
+	DECLARE @existe int;
+	SET @existe = 0;
+		SELECT @existe = COUNT(Productos.Proveedores.idProveedor) FROM Productos.Proveedores WHERE idProveedor = @idProveedor;
+		IF (@existe = 0)
+			BEGIN
+				RAISERROR(N'No existe el proveedor con el id %d"', 16, 1, @idProveedor);
+				RETURN 0
+			END 	
+		ELSE
+			BEGIN
+				DELETE FROM Productos.Proveedores	WHERE idProveedor = @idProveedor;
+				RETURN 1
+			END
+END
+GO
 -------------------------------------------------
 --Modulo Categoria de Producto
 CREATE PROCEDURE SP_AgregarCategoriaProducto
@@ -295,10 +419,60 @@ BEGIN
 END
 GO
 
-EXEC SP_AgregarCategoriaProducto 'Laveros'
+
+--Agregar Categorias 
+EXEC SP_AgregarCategoriaProducto 'Llaveros'
 EXEC SP_AgregarCategoriaProducto 'Ropa'
 EXEC SP_AgregarCategoriaProducto 'Hogar'
+GO
 
+CREATE PROCEDURE SP_ModificarCategoriaProducto
+(
+	@idCategoriaProducto INT,
+	@descripcion NVARCHAR(100)
+)
+AS
+BEGIN
+	DECLARE @existe int;
+	SET @existe = 0;
+	SELECT @existe = COUNT(Productos.CategoriaProducto.idCategoria) FROM Productos.CategoriaProducto WHERE idCategoria=@idCategoriaProducto;
+	IF (@existe = 0)
+		BEGIN
+			RAISERROR(N'No existe ningún Tipo de Unidad con el id "%d"', 16, 1, @idCategoriaProducto);
+			RETURN 0
+		END 	
+	ELSE
+		BEGIN
+			UPDATE Productos.CategoriaProducto
+				SET 	descripcion = @descripcion
+					WHERE idCategoria = @idCategoriaProducto;
+			RETURN 1
+		END
+END
+GO
+
+CREATE PROCEDURE SP_EliminarCategoriaProducto
+(
+	@idCategoriaProducto INT
+
+)
+AS
+BEGIN
+	DECLARE @existe int;
+	SET @existe = 0;
+	SELECT @existe = COUNT(Productos.CategoriaProducto.idCategoria) FROM Productos.CategoriaProducto WHERE idCategoria=@idCategoriaProducto;
+	IF (@existe = 0)
+		BEGIN
+			RAISERROR(N'No existe ninguna categoria con el id "%d"', 16, 1, @idCategoriaProducto);
+			RETURN 0
+		END 	
+	ELSE
+		BEGIN
+			DELETE FROM Productos.CategoriaProducto WHERE idCategoria = @idCategoriaProducto;
+			RETURN 1
+		END
+END
+GO
 -------------------------------------------------------------------------------------------------------------------
 --Modulo Producto 
 CREATE PROCEDURE SP_AgregarProducto
@@ -330,11 +504,73 @@ BEGIN
 END
 GO
 
-
 EXEC SP_AgregarProducto 'Naruto', 60, 100, 3, 1, 1,'hola'
 EXEC SP_AgregarProducto 'Akatsuki', 15, 20, 3, 2, 1,'hola'
 EXEC SP_AgregarProducto 'Kunay', 50, 70, 3, 1, 1,'hola'
 EXEC SP_AgregarProducto 'Churiken', 55, 80, 3, 1, 1,'hola'
+GO
+
+CREATE PROCEDURE SP_ModificarProducto
+(
+	@idProducto INT,
+	@descripcion NVARCHAR(100),
+	@costo DECIMAL(8,2),
+	@precioVenta DECIMAL(8,2),
+	@stock DECIMAL(8,2),
+	@idCategoria INT,
+	@idProveedor INT,
+	@imagen NVARCHAR(100)
+)
+AS
+BEGIN
+	DECLARE @existe int;
+	SET @existe = 0;
+
+	SELECT @existe = COUNT(Productos.Producto.idProducto) FROM Productos.Producto WHERE idProducto = @idProducto;
+
+	IF (@existe = 0)
+		BEGIN
+			RAISERROR(N'No existe el Producto con el id %d"', 16, 1, @idProducto);
+			RETURN 0
+		END 	
+	ELSE
+		BEGIN
+			UPDATE Productos.Producto
+				SET 	descripcion = @descripcion,
+						costo = @costo,
+						precioVenta = @precioVenta,
+						stock = @stock,
+						idCategoria = @idCategoria,
+						idProveedor = @idProveedor,
+						imagen = @imagen
+					WHERE idProducto = @idProducto;
+			RETURN 1
+		END
+END
+GO
+
+
+CREATE PROCEDURE SP_EliminarProducto
+(
+	@idProducto INT
+)
+AS
+BEGIN
+	DECLARE @existe int;
+	SET @existe = 0;
+		SELECT @existe = COUNT(Productos.Producto.idProducto) FROM Productos.Producto WHERE idProducto = @idProducto;
+		IF (@existe = 0)
+			BEGIN
+				RAISERROR(N'No existe el Producto con el id %d"', 16, 1, @idProducto);
+				RETURN 0
+			END 	
+		ELSE
+			BEGIN
+				DELETE FROM Productos.Producto WHERE idProducto = @idProducto;
+				RETURN 1
+			END
+END
+GO
 
 -------------------------------------------------------------------------------------------------------------------
 --Modulo Compras

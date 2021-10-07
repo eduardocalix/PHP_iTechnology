@@ -7,18 +7,23 @@
 <?php endif; ?>
 <a href="<?= BaseUrl ?>Categoria/Create" class="Boton Boton-Small BotonGreen">Crear Categoria</a>
 
-<?php Utils::DeleteSession('Save-Categorias');?>
+<?php 
+    
+    /* Utils::DeleteSession('Save-Categorias'); */?>
 <table>
     <tr>
         <th>IdCategoria</th>
         <th>Descripcion</th>
     </tr>
-    <?php while ($Cat = sqlsrv_fetch_array($Categorias)): ?>
+    <?php require 'Models/Categoria.php';
+    $Categoria1 = new Categoria();
+    $Cat = $Categoria1->getAll();
+    while ($Cate = sqlsrv_fetch_array($Cat)){?>
         <tr>
-            <td><?= $Cat['IdCategoria'] ?></td>
-            <td><?= $Cat['Descripcion'] ?></td>
+            <td><?=$Cate['idCategoria'] ?></td>
+            <td><?=$Cate['descripcion'] ?></td>
         </tr>    
-    <?php endwhile; ?>
+    <?php } ?>
 </table>
 
 

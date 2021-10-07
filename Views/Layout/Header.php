@@ -30,21 +30,16 @@
                         <a href="<?= BaseUrl ?>">Carrito</a>
                     </li>
                     <?php
-                     $Categoria = Utils::ShowCategorias();
-
-                     
-                    $i=0;
-                   while ($Cate = sqlsrv_fetch_array($Categoria)){
-                    $id=$Cate['idCategoria'] ;
-                    log($Cate['idCategoria']) ; 
-
-                    $Categoria1=$Cate['Descripcion'];
-                    
-                      ?>
-                       <li>
-                       <a href="<?= BaseUrl?>Categoria/Ver&Id=<?php echo $id?>"><?php echo $Categoria1?></a>
-                        </li>
-                    <?php  }  ?> 
+                        require_once 'Models/Categoria.php';
+                        $Categoria = new Categoria();
+                        $Cat = $Categoria->getAll();
+                        //$Categoria = Utils::ShowCategorias();
+                        while ($Cate = sqlsrv_fetch_array($Cat)){      
+                    ?>
+                    <li>
+                       <a href="<?= BaseUrl?>Categoria/Ver&Id=<?=$Cate['idCategoria']?>"><?=$Cate['descripcion']?></a>
+                    </li>
+                    <?php }  ?> 
                    
                 </ul>
             </nav>

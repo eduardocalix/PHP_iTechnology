@@ -32,29 +32,31 @@ class ProductosController {
         Utils::isAdmin();
         require_once 'Views/Productos/Formulario.php';
     }
-/* 
+
     public function Save() {
         Utils::isAdmin();
         $Errores = array();
         if (isset($_POST)) {
-            $Categoria = isset($_POST['Categoria']) ? $_POST['Categoria'] : false;
-            $Nombre = isset($_POST['Nombre']) ? $_POST['Nombre'] : false;
             $Descripcion = isset($_POST['Descripcion']) ? $_POST['Descripcion'] : FALSE;
-            $Precio = isset($_POST['Precio']) ? $_POST['Precio'] : false;
+            $Costo = isset($_POST['Costo']) ? $_POST['Costo'] : false;
+            $PrecioVenta = isset($_POST['PrecioVenta']) ? $_POST['PrecioVenta'] : false;
             $Stock = isset($_POST['Stock']) ? $_POST['Stock'] : false;
-            $Oferta = isset($_POST['Oferta']) ? $_POST['Oferta'] : false;
-            if ($Nombre && $Categoria && $Precio && $Stock) {
-                $Errores = Utils::ValidateText('Nombre', $Nombre);
-                $Errores += Utils::ValidateText('Precio', $Precio);
-                $Errores += Utils::ValidateText('Stock', $Stock);
+            $idCategoria = isset($_POST['idCategoria']) ? $_POST['idCategoria'] : false;
+            $idProveedor = isset($_POST['idProveedor']) ? $_POST['idProveedor'] : false;
+            if ($Descripcion && $idCategoria ) {
+                $Errores = Utils::ValidateText('Descripcion', $Descripcion);
+                //$Errores += Utils::ValidateText('Precio', $Precio);
+                //$Errores += Utils::ValidateText('Stock', $Stock);
                 if (count($Errores) == 0) {
                     $Producto = new Producto();
-                    $Producto->setCategoriaId($Categoria);
-                    $Producto->setNombre($Nombre);
+                    
+                    
                     $Producto->setDescripcion($Descripcion);
-                    $Producto->setPrecio($Precio);
+                    $Producto->setCosto($Costo);
+                    $Producto->setPrecioVenta($PrecioVenta);
                     $Producto->setStock($Stock);
-                    $Producto->setOferta($Oferta);
+                    $Producto->setCategoriaId($idCategoria);
+                    $Producto->setIdProveedor($idProveedor);
                     //Guardar Imagen
                     if (isset($_FILES['Imagen'])) {
                         $File = $_FILES['Imagen'];
@@ -142,7 +144,7 @@ class ProductosController {
         require_once 'Views/Productos/Formulario.php';
     }
     
-     */
+  
     
 
 //    public function Update() {

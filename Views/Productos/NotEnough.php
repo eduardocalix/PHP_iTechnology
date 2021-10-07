@@ -2,8 +2,8 @@
 <h1>Stock No Suficiente</h1>
 <?php foreach($_SESSION['SinStock'] as $Index=>$Elements):?>
 <div class="ProductDetail">
-        <?php if($Elements['Product']->Image!=null):?>
-        <img src="<?=BaseUrl?>Uploads/Images/<?=$Elements['Product']->Image?>"/>
+        <?php if($Elements['Product']['imagen']!=null):?>
+        <img src="<?=BaseUrl?>Uploads/Images/<?=$Elements['Product']['imagen']?>"/>
         <?php else:?>
         <img src="<?=BaseUrl?>assets/img/camiseta.png"/>
         <?php endif;?>

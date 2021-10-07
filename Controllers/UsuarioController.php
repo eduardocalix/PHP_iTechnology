@@ -14,22 +14,22 @@ class UsuarioController {
     }
 
     public function Login() {
-        $Usuario = new Usuario();
+        $UsuarioU = new Usuario();
         $Utils = new Utils();
         $Errores = array();
 
         if ($_POST) {
-            $Email = isset($_POST['Email']) ? $_POST['Email'] : false;
-            $Password = isset($_POST['Password']) ? $_POST['Password'] : false;
-            if ($Email && $Password) {
+            $Usuario = isset($_POST['Usuario']) ? $_POST['Usuario'] : false;
+            $Clave = isset($_POST['Clave']) ? $_POST['Clave'] : false;
+            if ($Usuario && $Clave) {
 
-                $Errores = Utils::ValidateText('Email', $Email);
-                $Errores = Utils::ValidateText('Password', $Password);
+                $Errores = Utils::ValidateText('Usuario', $Usuario);
+                $Errores = Utils::ValidateText('Clave', $Clave);
                 if (count($Errores) == 0) {
 
-                    $Usuario->setEmail($Email);
-                    $Usuario->setPassword($Password);
-                    $LogIn = $Usuario->LogIn();
+                    $UsuarioU->setUsuario($Usuario);
+                    $UsuarioU->setClave($Clave);
+                    $LogIn = $UsuarioU->LogIn();
                     if ($LogIn) {
                         $_SESSION['User'] = $LogIn;
                         if ($LogIn->Rol == 'Admin') {
@@ -53,24 +53,24 @@ class UsuarioController {
         if (isset($_POST)) {
 
             $Nombre = isset($_POST['Nombre']) ? $_POST['Nombre'] : false;
-            $Apellidos = isset($_POST['Apellidos']) ? $_POST['Apellidos'] : false;
-            $Email = isset($_POST['Email']) ? $_POST['Email'] : false;
-            $Password = isset($_POST['Password']) ? $_POST['Password'] : false;
+            $Apellido = isset($_POST['Apellido']) ? $_POST['Apellido'] : false;
+            $Usuario = isset($_POST['Usuario']) ? $_POST['Usuario'] : false;
+            $Clave = isset($_POST['Clave']) ? $_POST['Clave'] : false;
             $Errores = array();
             $Utils = new Utils();
-            if ($Nombre && $Apellidos && $Email && $Password) {
+            if ($Nombre && $Apellido && $Usuario && $Clave) {
                 $Errores = Utils::ValidateText('Nombre', $Nombre);
-                $Errores += Utils::ValidateText('Apellidos', $Apellidos);
-                $Errores += Utils::ValidateText('Email', $Email);
-                $Errores += Utils::ValidateText('Password', $Password);
+                $Errores += Utils::ValidateText('Apellido', $Apellido);
+                $Errores += Utils::ValidateText('Usuario', $Usuario);
+                $Errores += Utils::ValidateText('Clave', $Clave);
 
                 if (count($Errores) == 0) {
-                    $Usuario = new Usuario();
-                    $Usuario->setNombre($Nombre);
-                    $Usuario->setApellidos($Apellidos);
-                    $Usuario->setEmail($Email);
-                    $Usuario->setPassword($Password);
-                    $Save = $Usuario->Save();
+                    $UsuarioU = new Usuario();
+                    $UsuarioU->setNombre($Nombre);
+                    $UsuarioU->setApellido($Apellido);
+                    $UsuarioU->setUsuario($Usuario);
+                    $UsuarioU->setClave($Clave);
+                    $Save = $UsuarioU->Save();
                     if ($Save) {
                         $_SESSION['Register'] = 'Complete';
                     } else {

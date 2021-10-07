@@ -21,8 +21,8 @@ class CarritoController {
         if (isset($_SESSION['Carrito'])) {
             $Cont = 0;
             foreach ($_SESSION['Carrito'] as $Indice => $Element) {
-                if ($Element['ProductId'] == $ProductoId) {
-                    $_SESSION['Carrito'][$Indice]['ProductUnit'] ++;
+                if ($Element['idProducto'] == $ProductoId) {
+                    $_SESSION['Carrito'][$Indice]['stock'] ++;
                     $Cont++;
                 }
             }
@@ -35,10 +35,10 @@ class CarritoController {
             $Producto = $Pro->getOne();
 
             //Registrar el Producto
-            if (is_object($Producto) && $Product = $Producto->fetch_object()) {
+            if (is_object($Producto) && $Product = sqlsrv_fetch_array($Producto)) {
                 $_SESSION['Carrito'][] = array(
-                    "ProductId" => $Product->Id,
-                    "ProductPrice" => $Product->Precio,
+                    "ProductId" => $Product['idProducto'],
+                    "ProductPrice" => $Product['precioVenta'],
                     "ProductUnit" => 1,
                     "Product" => $Product
                 );

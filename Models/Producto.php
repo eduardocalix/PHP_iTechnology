@@ -1,4 +1,5 @@
 <?php
+//include("Config/Db.php");
 class Producto {
 
     private $Id;
@@ -34,14 +35,12 @@ class Producto {
     function getIdCategoria() {
         return $this->IdCategoria;
     }
-
     function getIdProveedor() {
         return $this->IdProveedor;
     }
     function getImage() {
         return $this->Image;
     }
-
     function setId($Id) {
         $this->Id = $Id;
     }
@@ -60,7 +59,7 @@ class Producto {
     function setCategoriaId($CategoriaId) {
         $this->CategoriaId = $CategoriaId;
     }
-    function setIdProveedot($IdProveedor) {
+    function setIdProveedor($IdProveedor) {
         $this->IdProveedor = $IdProveedor;
     }
     function setImage($Image) {
@@ -99,21 +98,20 @@ class Producto {
     }
 
     public function getRand() {
-        $Sql="SELECT * FROM Productos.Producto ORDER BY Rand() LIMIT 4";
+        $Sql="SELECT * FROM Productos.Producto ORDER BY Rand()";
         $Result=false;
         $Query= sqlsrv_query($this->Db,$Sql);
         if($Query){
             $Result=$Query;
         }
         return $Result;
-                
     }
  
     public function Save() {
-        $Sql = "INSERT INTO Productos VALUES(null,'{$this->getCategoriaId()}','{$this->getNombre()}',"
-                . "'{$this->getDescripcion()}','{$this->getPrecio()}','{$this->getStock()}',"
-                . "NULL,CURDATE(),'{$this->getImage()}')";
-        $Save = $this->Db->query($Sql);
+        $Sql = "INSERT INTO Productos.Producto VALUES('{$this->getDescripcion()}','{$this->getCosto()}',"
+                . "'{$this->getPrecioVenta()}','{$this->getStock()}',"
+                . "'{$this->getIdCategoria()}','{$this->getIdProveedor()}','{$this->getImage()}')";
+        $Save = sqlsrv_query($this->Db,$Sql);
         $Result = false;
         if ($Save) {
             $Result = true;
@@ -122,9 +120,9 @@ class Producto {
     }
 
     public function ValidateIfExists($Id) {
-        $Sql = "SELECT * FROM Productos WHERE Id=$Id";
+        $Sql = "SELECT * FROM Productos.Producto WHERE idProducto=$Id";
         $Result = false;
-        $Query = $this->Db->query($Sql);
+        $Query = sqlsrv_query($this->Db,$Sql);
         if ($Query) {
             $Result = true;
         }
@@ -132,9 +130,9 @@ class Producto {
     }
 
     public function Eliminar($Id) {
-        $Sql = "DELETE FROM Productos WHERE Id='$Id'";
+        $Sql = "DELETE FROM Productos.Producto WHERE idProducto='$Id'";
         $Result = false;
-        $Delete = $this->Db->query($Sql);
+        $Delete = sqlsrv_query($this->Db,$Sql);
         if ($Delete) {
             $Result = true;
         }
@@ -142,8 +140,8 @@ class Producto {
     }
 
     public function DecreaseStock($Unit) {
-        $Sql="UPDATE Productos SET Stock=Stock-'{$Unit}' WHERE Id='{$this->getId()}'";
-        $Update= $this->Db->query($Sql);
+        $Sql="UPDATE Productos.Producto SET stock=stock-'{$Unit}' WHERE idProducto='{$this->getId()}'";
+        $Update= sqlsrv_query($this->Db,$Sql);
         $Result=false;
         if($Update){
             $Result=true;
@@ -154,8 +152,8 @@ class Producto {
     }
     
     public function GetStockByProduct() {
-        $Sql="SELECT Stock From Productos WHERE Id='{$this->getId()}'";
-        $Query= $this->Db->query($Sql);
+        $Sql="SELECT stock From Productos.Producto WHERE idProducto='{$this->getId()}'";
+        $Query= sqlsrv_query($this->Db,$Sql);
         $Result=false;
         if($Query){
             $Result=$Query->fetch_object();
@@ -164,20 +162,19 @@ class Producto {
     }
     
     public function Update($Id) {
-        $Sql = "UPDATE Productos SET "
-                . "Categoria_Id='{$this->getCategoriaId()}',"
-                . "Nombre='{$this->getNombre()}',"
-                . "Descripcion='{$this->getDescripcion()}', "
-                . "Precio='{$this->getPrecio()}', "
-                . "Stock='{$this->getStock()}',"
-                . "Oferta='{$this->getOferta()}'";
-
+        $Sql = "UPDATE Productos.Producto SET "         
+                . "descripcion='{$this->getDescripcion()}', "
+                . "costo='{$this->getCosto()}',"
+                . "precioVenta='{$this->getPrecioVenta()}', "
+                . "stock='{$this->getStock()}',"
+                . "idCategoria='{$this->getIdCategoria()}',"
+                . "idProveedor='{$this->getIdProveedor()}',";
         if ($this->getImage() != null) {
             $Sql .= ",Image='{$this->getImage()}'";
         }
-        $Sql .= " WHERE Id='$Id'";
+        $Sql .= " WHERE idProducto='$Id'";
         $Result = false;
-        $Update = $this->Db->query($Sql);
+        $Update = sqlsrv_query($this->Db,$Sql);
         if ($Update) {
             $Result = true;
         }

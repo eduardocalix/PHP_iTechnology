@@ -1,7 +1,7 @@
 <?php if (isset($Edit) && $Edit && $Id && $Pro && is_object($Pro)):     
-    $Producto=$Pro->fetch_object();
-    $Url = BaseUrl ."Productos/Save&Id=$Producto->Id";?>
-<h1>Editar Producto <?=$Producto->Descripcion?></h1>
+    $Producto=sqlsrv_fetch_arrayy($Pro);
+    $Url = BaseUrl ."Productos/Save&Id=$Producto['idProducto']";?>
+<h1>Editar Producto <?=$Producto['descripcion']?></h1>
     <?php
 
     
@@ -10,10 +10,6 @@ else:
     ?>
 <h1>Crear Productos</h1>
 <?php endif; ?>
-
-
-
-
 
 <?php if (isset($_SESSION['RegisterProductos']) && $_SESSION['RegisterProductos'] == 'Failed'): ?>
     <strong class="Alertas AlertasError">Error al registrar el producto</strong>
@@ -32,9 +28,9 @@ Utils:: DeleteSession('RegisterProductos')
         <label for="Descripcion">Descripcion</label>
         <textarea name="Descripcion"><?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->Descripcion:''?></textarea>
 
-        <?= Utils::ShowErrors('Errores-Productos-Save', 'Precio') ?>
-        <label for="Precio">Precio</label>
-        <input type="text" name="Precio" value="<?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->Precio:''?>" required/>
+        <?= Utils::ShowErrors('Errores-Productos-Save', 'PrecioVenta') ?>
+        <label for="PrecioVenta">PrecioVenta</label>
+        <input type="text" name="PrecioVenta" value="<?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->PrecioVenta:''?>" required/>
 
         <?= Utils::ShowErrors('Errores-Productos-Save', 'Stock') ?>
         <label for="Stock">Stock</label>
@@ -44,8 +40,8 @@ Utils:: DeleteSession('RegisterProductos')
         <input type="text" name="Oferta" value="<?=(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro))? $Producto->Oferta:''?>"/>
 
         <label for="Imagen">Imagen</label>
-        <?php if(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro) && !empty($Producto->Image)):?>
-        <image class="Miniatura" src="<?=BaseUrl?>Uploads/Images/<?=$Producto->Image?>"/>
+        <?php if(isset($Edit) && $Edit && $Id && $Pro && is_object($Pro) && !empty($Producto['imagen'])):?>
+        <image class="Miniatura" src="<?=BaseUrl?>Uploads/Images/<?=$Producto['imagen']?>"/>
         <?php endif;?>
         
         <input type="file" name="Imagen"/>

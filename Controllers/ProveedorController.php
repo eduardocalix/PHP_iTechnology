@@ -1,40 +1,40 @@
 <?php
 
-require_once 'Models/Pedido.php';
-require_once 'Models/LiniasdePedido.php';
+require_once 'Models/Proveedores.php';
+require_once 'Models/LiniasdeProveedores.php';
 require_once 'Models/Producto.php';
 
-class PedidoController {
+class ProveedoresController {
 
     public function Index() {
-        require_once 'Views/Pedido/Realizar.php';
+        require_once 'Views/Proveedores/Realizar.php';
     }
 
     public function Confirmado() {
         Utils::isLog();
         $UserId = $_SESSION['User']->Id;
-        $Pedido = new Pedido();
-        $Pedido->setUsuerId($UserId);
-        $Pe = $Pedido->getByUser();
+        $Proveedores = new Proveedores();
+        $Proveedores->setUsuerId($UserId);
+        $Pe = $Proveedores->getByUser();
         if (is_object($Pe) && $Ped = $Pe->fetch_object()) {
             $PedId = $Ped->Id;
-            $Produ = $Pedido->getProductbyLinea($PedId);
+            $Produ = $Proveedores->getProductbyLinea($PedId);
             Utils::DeleteSession('Carrito');
-            require_once 'Views/Pedido/Confirmado.php';
+            require_once 'Views/Proveedores/Confirmado.php';
         }
     }
 
     public function Add() {
         if (isset($_POST)) {
             Utils::isLog();
-            $Provincia = isset($_POST['Provincia']) ? $_POST['Provincia'] : false;
-            $Localidad = isset($_POST['Localidad']) ? $_POST['Localidad'] : false;
+            $Nombre = isset($_POST['Nombre']) ? $_POST['Nombre'] : false;
+            $Telefono = isset($_POST['Telefono']) ? $_POST['Telefono'] : false;
             $Direccion = isset($_POST['Direccion']) ? $_POST['Direccion'] : false;
-            $UsuerId = $_SESSION['User']->Id;
+          
 
-            if ($Provincia && $Localidad && $Direccion) {
-                $Pedido = new Pedido();
-                $LiniasPedido = new LiniasdePedido();
+            if ($Nombre && $Telefono && $Direccion) {
+                $Proveedores = new Proveedores();
+                $LiniasProveedores = new LiniasdeProveedores();
                 $Producto = new Producto();
                 $Cont = 0;
 
@@ -67,37 +67,37 @@ class PedidoController {
 
                 $Result = false;
                 if ($Cont >= 1) {
-                    $Pedido->setUsuerId($UsuerId);
-                    $Pedido->setProvincia($Provincia);
-                    $Pedido->setLocalidad($Localidad);
-                    $Pedido->setDireccion($Direccion);
-                    $Pedido->setCoste($Coste);
-                    $Save = $Pedido->Save();
+                    $Proveedores->setUsuerId($UsuerId);
+                    $Proveedores->setNombre($Nombre);
+                    $Proveedores->setTelefono($Telefono);
+                    $Proveedores->setDireccion($Direccion);
+                    $Proveedores->setCoste($Coste);
+                    $Save = $Proveedores->Save();
                     if ($Save) {
-                        $SaveLinia = $LiniasPedido->Save();
-                        if ($LiniasPedido) {
+                        $SaveLinia = $LiniasProveedores->Save();
+                        if ($LiniasProveedores) {
                             $Result = true;
-                            $_SESSION['AddPedido'] = $Result;
+                            $_SESSION['AddProveedores'] = $Result;
                         }
                     }
                 }
             }
         }
         if ($Residuo >= 0) {
-            header('LOCATION:' . BaseUrl . 'Pedido/Confirmado');
+            header('LOCATION:' . BaseUrl . 'Proveedores/Confirmado');
         }
     }
 
-    public function MisPedidos() {
+    public function MisProveedoress() {
         $Admin = Utils::isLog();
-        $Pedido = new Pedido();
+        $Proveedores = new Proveedores();
         if (isset($_SESSION['User'])) {
             $UserId = $_SESSION['User']->Id;
-            $Pedido->setUsuerId($UserId);
-            $Ped = $Pedido->getAllbyUser();
+            $Proveedores->setUsuerId($UserId);
+            $Ped = $Proveedores->getAllbyUser();
         }
 
-        require_once 'Views/Pedido/MisPedidos.php';
+        require_once 'Views/Proveedores/MisProveedoress.php';
     }
 
     public function Details() {
@@ -107,34 +107,34 @@ class PedidoController {
         }
         if (isset($_GET['Id'])) {
             $PedId = $_GET['Id'];
-            $Pedido = new Pedido();
-            $Pedido->setId($PedId);
-            $Pro = $Pedido->getProductbyLinea($PedId);
-            $Ped = $Pedido->getOne();
+            $Proveedores = new Proveedores();
+            $Proveedores->setId($PedId);
+            $Pro = $Proveedores->getProductbyLinea($PedId);
+            $Ped = $Proveedores->getOne();
         }
 
-        require_once 'Views/Pedido/Details.php';
+        require_once 'Views/Proveedores/Details.php';
     }
 
-    public function GestionarPedidos() {
+    public function GestionarProveedoress() {
         Utils::isAdmin();
         $Admin = true;
-        $Pedido = new Pedido();
-        $Ped = $Pedido->getAll();
-        require_once 'Views/Pedido/MisPedidos.php';
+        $Proveedores = new Proveedores();
+        $Ped = $Proveedores->getAll();
+        require_once 'Views/Proveedores/MisProveedoress.php';
     }
 
     public function Estado() {
         if (isset($_POST)) {
             $Estado = $_POST['Estado'];
-            $PedidoId = $_POST['PedidoId'];
-            $Pedido = new Pedido();
-            $Pedido->setEstado($Estado);
-            $Pedido->setId($PedidoId);
-            $Update = $Pedido->UpdateEstado();
+            $ProveedoresId = $_POST['ProveedoresId'];
+            $Proveedores = new Proveedores();
+            $Proveedores->setEstado($Estado);
+            $Proveedores->setId($ProveedoresId);
+            $Update = $Proveedores->UpdateEstado();
         }
         if ($Update) {
-            header("LOCATION: " . BaseUrl . 'Pedido/Details&Id=' . $PedidoId);
+            header("LOCATION: " . BaseUrl . 'Proveedores/Details&Id=' . $ProveedoresId);
         } else {
             header('LOCATION: ' . BaseUrl);
         }

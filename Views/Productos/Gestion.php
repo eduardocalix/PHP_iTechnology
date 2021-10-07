@@ -12,15 +12,15 @@
         <th>Stock</th>
         <th>Acciones</th>
     </tr>
-    <?php while ($Producto = $Pro->fetch_object()): ?>
+    <?php while ($Producto = sqlsrv_fetch_array($Pro)): ?>
         <tr>
-            <td><?= $Producto->Id ?></td>
-            <td><?= $Producto->Descripcion ?></td>
-            <td>$ <?= $Producto->Precio ?></td>
-            <td><?= $Producto->Stock ?></td>
+            <td><?= $Producto['idProducto']?></td>
+            <td><?= $Producto['descripcion'] ?></td>
+            <td>L. <?= $Producto['precioVenta'] ?></td>
+            <td><?= $Producto['stock'] ?></td>
             <td>
-                <a href="<?= BaseUrl ?>Productos/Editar&Id=<?= $Producto->Id ?>" class="Boton Boton-Small BotonYellow BotonAcciones">Editar</a>
-                <a href="<?= BaseUrl ?>Productos/Eliminar&Id=<?= $Producto->Id ?>" class="Boton Boton-Small BotonRojo BotonAcciones">Eliminar</a>
+                <a href="<?= BaseUrl ?>Productos/Editar&Id=<?= $Producto['idProducto']?>" class="Boton Boton-Small BotonYellow BotonAcciones">Editar</a>
+                <a href="<?= BaseUrl ?>Productos/Eliminar&Id=<?= $Producto['idProducto'] ?>" class="Boton Boton-Small BotonRojo BotonAcciones">Eliminar</a>
             </td>
         </tr>
     <?php endwhile; ?>

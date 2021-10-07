@@ -17,19 +17,19 @@ class Utils {
             }
         }
 
-        if ($Type == 'Apellidos') {
+        if ($Type == 'Apellido') {
             if (empty($Text) || is_numeric($Text) || preg_match('/[0-9]/', $Text)) {
                 $Error[$Type] = 'El Apellido Tiene Un Error';
             }
         }
 
-        if ($Type == 'Email') {
-            if (empty($Text) || !filter_var($Text, FILTER_VALIDATE_EMAIL)) {
+        if ($Type == 'Usuario') {
+            if (empty($Text)) {
                 $Error[$Type] = 'El Correo Electronico no es valido';
             }
         }
 
-        if ($Type == 'Password') {
+        if ($Type == 'Clave') {
             if (empty($Text)) {
                 $Error[$Type] = 'La Contraseña Esta Vacia';
             }

@@ -10,21 +10,21 @@ $Utils=new Utils();?>
 
 <form action="<?=BaseUrl?>/Usuario/Save" method="POST">
     
-    <?= Utils::ShowErrors('Errores-Register', 'Nombre')?>
+    <?= Utils::ShowErrors('Errores-Register', 'nombre')?>
     <label for="Nombre">Nombre</label>
     <input type="text" name="Nombre" />
     
-    <?=Utils::ShowErrors('Errores-Register', 'Apellido')?>
-    <label for="Apellidos">Apellidos</label>
-    <input type="text" name="Apellidos" />
+    <?=Utils::ShowErrors('Errores-Register', 'apellido')?>
+    <label for="apellido">Apellido</label>
+    <input type="text" name="apellido" />
     
-    <?=Utils::ShowErrors('Errores-Register', 'Email')?>
-    <label for="Email">Email</label>
-    <input type="email" name="Email" />
+    <?=Utils::ShowErrors('Errores-Register', 'usuario')?>
+    <label for="usuario">Usuario</label>
+    <input type="text" name="usuario" />
     
-    <?=Utils::ShowErrors('Errores-Register', 'Password')?>
-    <label for="Password">Contraseña</label>
-    <input type="password" name="Password"/>
+    <?=Utils::ShowErrors('Errores-Register', 'clave')?>
+    <label for="clave">Contraseña</label>
+    <input type="password" name="clave"/>
     
     <input type="submit" value="Registrarse"/>
 </form>
