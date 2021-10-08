@@ -5,7 +5,7 @@
         <?php if($Elements['Product']['imagen']!=null):?>
         <img src="<?=BaseUrl?>Uploads/Images/<?=$Elements['Product']['imagen']?>"/>
         <?php else:?>
-        <img src="<?=BaseUrl?>assets/img/camiseta.png"/>
+        <img src="<?=BaseUrl?>assets/img/logo.png"/>
         <?php endif;?>
         <div class="DetailsData">
             <p class="Desc">Stock Real: <?=$Elements['Stock']?></p>

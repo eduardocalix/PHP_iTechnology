@@ -15,7 +15,7 @@ function showError() {
     $Error = new ErrorController();
     $Error->Index();
 }
-
+//Funcion que permite sabber que controlar va a ejecutar la vista en los partial de la pagina web
 if (isset($_GET['Controller'])) {
     $NombreControlador = $_GET['Controller'] . 'Controller';
 } elseif (!isset($_GET['Controller']) && !isset($_GET['Action'])) {

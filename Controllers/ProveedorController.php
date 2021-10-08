@@ -1,7 +1,6 @@
 <?php
 
 require_once 'Models/Proveedores.php';
-require_once 'Models/LiniasdeProveedores.php';
 require_once 'Models/Producto.php';
 
 class ProveedoresController {
@@ -16,11 +15,11 @@ class ProveedoresController {
         $Proveedores = new Proveedores();
         $Proveedores->setUsuerId($UserId);
         $Pe = $Proveedores->getByUser();
-        if (is_object($Pe) && $Ped = $Pe->fetch_object()) {
+        if (is_object($Pe) && $Ped = sqlsrv_fetch_array($Pe)) {
             $PedId = $Ped->Id;
             $Produ = $Proveedores->getProductbyLinea($PedId);
             Utils::DeleteSession('Carrito');
-            require_once 'Views/Proveedores/Confirmado.php';
+            require_once 'Views/Proveedor/Confirmado.php';
         }
     }
 
@@ -97,7 +96,7 @@ class ProveedoresController {
             $Ped = $Proveedores->getAllbyUser();
         }
 
-        require_once 'Views/Proveedores/MisProveedoress.php';
+        require_once 'Views/Proveedor/Mostrar.php';
     }
 
     public function Details() {
@@ -113,7 +112,7 @@ class ProveedoresController {
             $Ped = $Proveedores->getOne();
         }
 
-        require_once 'Views/Proveedores/Details.php';
+        require_once 'Views/Proveedor/Details.php';
     }
 
     public function GestionarProveedoress() {
@@ -121,20 +120,20 @@ class ProveedoresController {
         $Admin = true;
         $Proveedores = new Proveedores();
         $Ped = $Proveedores->getAll();
-        require_once 'Views/Proveedores/MisProveedoress.php';
+        require_once 'Views/Proveedor/Mostrar.php';
     }
 
     public function Estado() {
         if (isset($_POST)) {
             $Estado = $_POST['Estado'];
-            $ProveedoresId = $_POST['ProveedoresId'];
+            $ProveedoresId = $_POST['IdProveedores'];
             $Proveedores = new Proveedores();
             $Proveedores->setEstado($Estado);
             $Proveedores->setId($ProveedoresId);
             $Update = $Proveedores->UpdateEstado();
         }
         if ($Update) {
-            header("LOCATION: " . BaseUrl . 'Proveedores/Details&Id=' . $ProveedoresId);
+            header("LOCATION: " . BaseUrl . 'Proveedor/Details&Id=' . $ProveedoresId);
         } else {
             header('LOCATION: ' . BaseUrl);
         }

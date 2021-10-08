@@ -58,8 +58,8 @@ class ProductosController {
                     $Producto->setCategoriaId($idCategoria);
                     $Producto->setIdProveedor($idProveedor);
                     //Guardar Imagen
-                    if (isset($_FILES['Imagen'])) {
-                        $File = $_FILES['Imagen'];
+                    if (isset($_FILES['image'])) {
+                        $File = $_FILES['image'];
                         $FileName = $File['name'];
                         $FileType = $File['type'];
                         if ($FileType == 'image/jpg' || $FileType == 'image/jpeg' || $FileType == 'image/png' || $FileType == 'image/gif') {
@@ -89,8 +89,8 @@ class ProductosController {
             header('LOCATION:' . BaseUrl . 'Productos/Gestion');
         } else {
             $_SESSION['RegisterProductos'] = 'Failed';
-            if (isset($_GET['Id'])) {
-                $Id = $_GET['Id'];
+            if (isset($_GET['idProducto'])) {
+                $Id = $_GET['idProducto'];
                 header('LOCATION:' . BaseUrl . 'Productos/Editar&Id=' . $Id);
             } else {
                 header('LOCATION:' . BaseUrl . 'Productos/Crear');
@@ -99,8 +99,8 @@ class ProductosController {
     }
 
     public function Details() {
-        if(isset($_GET['Id'])){
-            $Id=$_GET['Id'];
+        if(isset($_GET['idProducto'])){
+            $Id=$_GET['idProducto'];
             $Producto=new Producto();
             $Producto->setId($Id);
             $Pro=$Producto->getOne();
